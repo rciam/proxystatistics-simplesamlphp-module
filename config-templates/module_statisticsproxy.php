@@ -7,78 +7,103 @@
  */
 
 $config = array(
-
+	
 	/*
-	 * Fill the serverName
+	 * Database
+	 *
+	 * This database configuration is optional. If you are not using
+	 * core functionality or modules that require a database, you can
+	 * skip this configuration.
 	 */
-	'serverName' => 'localhost',
-
+	
 	/*
-	 * If you want to use the default port, please comment option 'port'
+	 * Define if you want to use the database defined in config.php (true)
+	 * or to use the database options in this file (false). 
 	 */
-	'port' => 3306,
-
+	'useGlobalConfig' => false,
+	
 	/*
-	 * Fill the user name
+	 * Database connection string.
+	 * Ensure that you have the required PDO database driver installed
+	 * for your connection string.
+	 * Examples:
+	 * mysql:host=localhost;port=3306;dbname=testdb
+	 * mysql:unix_socket=/tmp/mysql.sock;dbname=testdb
 	 */
-	'userName' => 'stats',
-
+	'database.dsn' => 'mysql:host=localhost;dbname=STATS;charset=utf8',
+	
 	/*
-	 * Fill the password
+	 * SQL database credentials
 	 */
-	'password' => 'stats',
-
+	'database.username' => 'stats',
+	'database.password' => 'stats',
+	
 	/*
-	 * Fill the database name
+	 * (Optional) Table prefix
 	 */
-	'databaseName' => 'STATS',
-
-    /*
-     * Fill the table name for statistics
-     */
-    'statisticsTableName' => 'statisticsTableName',
+	'database.prefix' => '',
+	
+	/*
+	 * True or false if you would like a persistent database connection
+	 */
+	'database.persistent' => false,
+	
+	/*
+	 * Define connection options
+	 * Example, SSL connection:
+	 *   array(
+	 *       PDO::ATTR_PERSISTENT => true,
+	 *       PDO::MYSQL_ATTR_SSL_KEY    =>'/path/to/client-key.pem',
+	 *       PDO::MYSQL_ATTR_SSL_CERT=>'/path/to/client-cert.pem',
+	 *       PDO::MYSQL_ATTR_SSL_CA    =>'/path/to/ca-cert.pem',
+	 *       PDO::MYSQL_ATTR_SSL_CAPATH => '/path/to/ca',
+	 *       
+	 *   )
+	 * 
+	 * More info about the options http://php.net/manual/en/ref.pdo-mysql.php
+	 * 
+	 * NOTE: in case you want to use 'database.driver_options' option you must 
+	 * define 'database.persistent' to false because 'database.persistent' will 
+	 * overwrite your options (it's a bug of SimpleSAML_Database module 
+	 * https://github.com/simplesamlphp/simplesamlphp/blob/master/lib/SimpleSAML/Database.php#L80)
+	 */
+	'database.driver_options' => array(),
+	
+	/*
+	 * Database slave configuration is optional as well. If you are only
+	 * running a single database server, leave this blank. If you have
+	 * a master/slave configuration, you can define as many slave servers
+	 * as you want here. Slaves will be picked at random to be queried from.
+	 *
+	 * Configuration options in the slave array are exactly the same as the
+	 * options for the master (shown above) with the exception of the table
+	 * prefix.
+	 */
+	'database.slaves' => array(
+		/*
+		array(
+			'dsn' => 'mysql:host=myslave;dbname=saml',
+			'username' => 'simplesamlphp',
+			'password' => 'secret',
+			'persistent' => false,
+		),
+		*/
+	),
+	
+	/*
+	 * Fill the table name for statistics
+	 */
+	'statisticsTableName' => 'statisticsTableName',
 
 	/*
 	 * Fill the table name for identityProvidersMap
 	 */
 	'identityProvidersMapTableName' => 'identityProvidersMap',
 
-    /*
-     * Fill the table name for serviceProviders
-     */
-    'serviceProvidersMapTableName' => 'serviceProvidersMap',
-
 	/*
-	 * Fill true, if you want to use encryption, false if not.
+	 * Fill the table name for serviceProviders
 	 */
-	'encryption' => true/false,
-
-	/*
-	 * The path name to the certificate authority file.
-	 *
-	 * If you use encryption, you must fill this option.
-	 */
-	'ssl_ca' => '/example/ca.pem',
-
-	/*
-	 * The path name to the certificate file.
-	 *
-	 * If you use encryption, you must fill this option.
-	 */
-	'ssl_cert_path' => '/example/cert.pem',
-
-	/*
-	 * The path name to the key file.
-	 *
-	 * If you use encryption, you must fill this option.
-	 */
-	'ssl_key_path' => '/example/key.pem',
-
-	/*
-	 * The pathname to a directory that contains trusted SSL CA certificates in PEM format.
-	 *
-	 * If you use encryption, you must fill this option.
-	 */
-	'ssl_ca_path' => '/etc/ssl',
-
+	'serviceProvidersMapTableName' => 'serviceProvidersMap',
+	
 );
+	
