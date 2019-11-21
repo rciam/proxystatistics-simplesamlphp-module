@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [v3.2.1]
 #### Fixed
 - Fixed the bug in using double '$'
 
@@ -135,6 +137,7 @@ All notable changes to this project will be documented in this file.
 - Changelog
 
 [Unreleased]: https://github.com/CESNET/proxystatistics-simplesamlphp-module/tree/master
+[v3.2.1]: https://github.com/CESNET/proxystatistics-simplesamlphp-module/tree/v3.2.1
 [v3.2.0]: https://github.com/CESNET/proxystatistics-simplesamlphp-module/tree/v3.2.0
 [v3.1.0]: https://github.com/CESNET/proxystatistics-simplesamlphp-module/tree/v3.1.0
 [v3.0.0]: https://github.com/CESNET/proxystatistics-simplesamlphp-module/tree/v3.0.0
