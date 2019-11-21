@@ -72,11 +72,11 @@ class DatabaseCommand
         }
 
         if ($this->databaseConnector->getMode() === 'IDP') {
-            $idpName = $$this->databaseConnector->getIdpName();
-            $idpEntityID = $$this->databaseConnector->getIdpEntityId();
+            $idpName = $this->databaseConnector->getIdpName();
+            $idpEntityID = $this->databaseConnector->getIdpEntityId();
         } elseif ($this->databaseConnector->getMode() === 'SP') {
-            $spEntityId = $$this->databaseConnector->getSpEntityId();
-            $spName = $$this->databaseConnector->getSpName();
+            $spEntityId = $this->databaseConnector->getSpEntityId();
+            $spName = $this->databaseConnector->getSpName();
         }
 
         $year = $date->format('Y');

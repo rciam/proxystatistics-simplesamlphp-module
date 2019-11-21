@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+#### Fixed
+- Fixed the bug in using double '$'
 
 ## [v3.2.0]
 #### Added
