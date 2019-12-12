@@ -30,7 +30,7 @@ class DatabaseCommand
         $day = $date->format('d');
         
 		if (is_null($idpEntityID) || empty($idpEntityID) || is_null($spEntityId) || empty($spEntityId)) {
-			SimpleSAML\Logger::error("Some from attribute: 'idpEntityId', 'idpName', 'spEntityId' and 'spName' is null or empty and login log wasn't inserted into the database.");
+			SimpleSAML_Logger::error("Some from attribute: 'idpEntityId', 'idpName', 'spEntityId' and 'spName' is null or empty and login log wasn't inserted into the database.");
 		} else {
             if ($dbDriver == 'pgsql') {
                 $query = "INSERT INTO $statisticsTableName (year, month, day, sourceIdp, service, count) VALUES (:year, :month, :day, :idpEntityId, :spEntityId, 1) ON CONFLICT (year, month, day, sourceIdp, service) DO UPDATE SET count =  statistics.count + 1";
@@ -47,7 +47,7 @@ class DatabaseCommand
             try {
                 $stmt = $conn->write($query, $queryParams);
             } catch (Exception $e) {
-                SimpleSAML\Logger::error("The login log wasn't inserted into table: " . $statisticsTableName . ".\nCaught exception: " . $e->getMessage() . "\n");
+                SimpleSAML_Logger::error("The login log wasn't inserted into table: " . $statisticsTableName . ".\nCaught exception: " . $e->getMessage() . "\n");
             }
 
 			if (!is_null($idpName) && !empty($idpName)) {
@@ -64,7 +64,7 @@ class DatabaseCommand
                 try {
                     $stmt = $conn->write($query, $queryParams);
                 } catch (Exception $e) {
-                    SimpleSAML\Logger::error("The login log wasn't inserted into table: " . $identityProvidersMapTableName . ".\nCaught exception: " . $e->getMessage() . "\n");
+                    SimpleSAML_Logger::error("The login log wasn't inserted into table: " . $identityProvidersMapTableName . ".\nCaught exception: " . $e->getMessage() . "\n");
                 }
 			}
 
@@ -82,10 +82,10 @@ class DatabaseCommand
                 try {
                     $stmt = $conn->write($query, $queryParams);
                 } catch (Exception $e) {
-                    SimpleSAML\Logger::error("The login log wasn't inserted into table: " . $serviceProvidersMapTableName . ".\nCaught exception: " . $e->getMessage() . "\n");
+                    SimpleSAML_Logger::error("The login log wasn't inserted into table: " . $serviceProvidersMapTableName . ".\nCaught exception: " . $e->getMessage() . "\n");
                 }
 			}
-            SimpleSAML\Logger::info("The login log was successfully stored in database");
+            SimpleSAML_Logger::info("The login log was successfully stored in database");
 		}
 
 	}
