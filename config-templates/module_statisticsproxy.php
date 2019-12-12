@@ -7,7 +7,7 @@
  */
 
 $config = array(
-	
+
 	/*
 	 * Database
 	 *
@@ -15,13 +15,13 @@ $config = array(
 	 * core functionality or modules that require a database, you can
 	 * skip this configuration.
 	 */
-	
+
 	/*
 	 * Define if you want to use the database defined in config.php (true)
 	 * or to use the database options in this file (false). 
 	 */
 	'useGlobalConfig' => false,
-	
+
 	/*
 	 * Database connection string.
 	 * Ensure that you have the required PDO database driver installed
@@ -32,23 +32,23 @@ $config = array(
      * pgsql:host=localhost;port=5432;dbname=testdb
 	 */
 	'database.dsn' => 'mysql:host=localhost;dbname=STATS;charset=utf8',
-	
+
 	/*
 	 * SQL database credentials
 	 */
 	'database.username' => 'stats',
 	'database.password' => 'stats',
-	
+
 	/*
 	 * (Optional) Table prefix
 	 */
 	'database.prefix' => '',
-	
+
 	/*
 	 * True or false if you would like a persistent database connection
 	 */
 	'database.persistent' => false,
-	
+
 	/*
 	 * Define connection options
 	 * Example, SSL connection:
@@ -69,7 +69,7 @@ $config = array(
 	 * https://github.com/simplesamlphp/simplesamlphp/blob/master/lib/SimpleSAML/Database.php#L80)
 	 */
 	'database.driver_options' => array(),
-	
+
 	/*
 	 * Database slave configuration is optional as well. If you are only
 	 * running a single database server, leave this blank. If you have
@@ -90,7 +90,7 @@ $config = array(
 		),
 		*/
 	),
-	
+
 	/*
 	 * Fill the table name for statistics
 	 */
@@ -105,6 +105,5 @@ $config = array(
 	 * Fill the table name for serviceProviders
 	 */
 	'serviceProvidersMapTableName' => 'serviceProvidersMap',
-	
+
 );
-	
