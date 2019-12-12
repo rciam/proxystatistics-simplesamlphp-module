@@ -29,6 +29,7 @@ $config = array(
 	 * Examples:
 	 * mysql:host=localhost;port=3306;dbname=testdb
 	 * mysql:unix_socket=/tmp/mysql.sock;dbname=testdb
+     * pgsql:host=localhost;port=5432;dbname=testdb
 	 */
 	'database.dsn' => 'mysql:host=localhost;dbname=STATS;charset=utf8',
 	
@@ -93,7 +94,7 @@ $config = array(
 	/*
 	 * Fill the table name for statistics
 	 */
-	'statisticsTableName' => 'statisticsTableName',
+	'statisticsTableName' => 'statistics',
 
 	/*
 	 * Fill the table name for identityProvidersMap

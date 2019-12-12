@@ -53,4 +53,16 @@ class databaseConnector
 		return $this->serviceProvidersMapTableName;
 	}
 
+	public function getDbDriver()
+	{
+		if ($this->useGlobalConfig) {
+			$config = SimpleSAML_Configuration::getInstance();
+		} else {
+			$config = SimpleSAML_Configuration::getConfig(self::CONFIG_FILE_NAME);
+		}
+		$dsn = $config->getString('database.dsn');
+		preg_match('/.+?(?=:)/', $dsn, $driver);
+		return $driver[0];
+	}
+
 }
