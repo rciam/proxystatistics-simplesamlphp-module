@@ -23,8 +23,17 @@ class DatabaseCommand
             $idpEntityID = $request['Attributes']['authnAuthority'][0];
             $idpName = null;
         }
-        $spEntityId = $request['Destination']['entityid'];
-        $spName = $request['Destination']['name']['en'];
+        if (!empty($request['saml:RequesterID'])) {
+            if (!empty($databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $databaseConnector->getOidcIssuer()) !== false)) {
+                $spEntityId = str_replace($databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
+            } else {
+                $spEntityId = $request['saml:RequesterID'][0];
+            }
+            $spName = $spEntityId; // TODO: Improve friendly name
+        } else {
+            $spEntityId = $request['Destination']['entityid'];
+            $spName = $request['Destination']['name']['en'];
+        }
         $year = $date->format('Y');
         $month = $date->format('m');
         $day = $date->format('d');
