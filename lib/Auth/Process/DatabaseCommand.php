@@ -16,11 +16,12 @@ class DatabaseCommand
         $statisticsTableName = $conn->applyPrefix($databaseConnector->getStatisticsTableName());
         $identityProvidersMapTableName = $conn->applyPrefix($databaseConnector->getIdentityProvidersMapTableName());
         $serviceProvidersMapTableName = $conn->applyPrefix($databaseConnector->getServiceProvidersMapTableName());
-        if (is_null($request['Attributes']['authnAuthority'][0]) || empty($request['Attributes']['authnAuthority'][0])) {
+        $idpEntityIdAttrName = $conn->applyPrefix($databaseConnector->getIdpEntityIdAttrName());
+        if (is_null($request['Attributes'][$idpEntityIdAttrName][0]) || empty($request['Attributes'][$idpEntityIdAttrName][0])) {
             $idpEntityID = $request['saml:sp:IdP'];
             $idpName = $request['Attributes']['sourceIdPName'][0];
         } else {
-            $idpEntityID = $request['Attributes']['authnAuthority'][0];
+            $idpEntityID = $request['Attributes'][$idpEntityIdAttrName][0];
             $idpName = null;
         }
         if (!empty($request['saml:RequesterID'])) {

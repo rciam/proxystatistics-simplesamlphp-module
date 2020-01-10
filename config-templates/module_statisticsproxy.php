@@ -106,6 +106,11 @@ $config = array(
 	 */
 	'serviceProvidersMapTableName' => 'serviceProvidersMap',
 
+	/*
+	 * Fill the variable name for AuthenticatingAuthority attribute
+	 */
+	'idpEntityIdAttrName' => 'authnAuthority',
+
     /*
      * Fill the entityID of OpenID Connect Provider
      */

@@ -9,6 +9,7 @@ class databaseConnector
 	private $statisticsTableName;
 	private $identityProvidersMapTableName;
 	private $serviceProvidersMapTableName;
+	private $idpEntityIdAttrName;
 	private $oidcIss;
 
 	const CONFIG_FILE_NAME = 'module_statisticsproxy.php';
@@ -16,6 +17,7 @@ class databaseConnector
 	const STATS_TABLE_NAME = 'statisticsTableName';
 	const IDP_MAP_TABLE_NAME = 'identityProvidersMapTableName';
 	const SP_MAP_TABLE_NAME = 'serviceProvidersMapTableName';
+	const IDP_ENTITY_ID_ATTR_NAME = 'idpEntityIdAttrName';
 	const OIDC_ISS = 'oidcIssuer';
 
 
@@ -27,6 +29,7 @@ class databaseConnector
 		$this->statisticsTableName = $conf->getString(self::STATS_TABLE_NAME);
 		$this->identityProvidersMapTableName = $conf->getString(self::IDP_MAP_TABLE_NAME);
 		$this->serviceProvidersMapTableName = $conf->getString(self::SP_MAP_TABLE_NAME);
+		$this->idpEntityIdAttrName = $conf->getString(self::IDP_ENTITY_ID_ATTR_NAME);
 		$this->oidcIss = $conf->getString(self::OIDC_ISS, null);
 	}
 
@@ -54,6 +57,11 @@ class databaseConnector
 	public function getServiceProvidersMapTableName()
 	{
 		return $this->serviceProvidersMapTableName;
+	}
+
+	public function getIdpEntityIdAttrName()
+	{
+		return $this->idpEntityIdAttrName;
 	}
 
 	public function getDbDriver()
