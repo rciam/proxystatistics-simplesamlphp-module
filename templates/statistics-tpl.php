@@ -13,11 +13,11 @@ if (!is_null($instanceName)) {
     $this->data['header'] = $instanceName . ' ' . $this->t('{proxystatistics:Proxystatistics:templates/statistics_header}');
 } else {
     $this->data['header'] = $this->t('{proxystatistics:Proxystatistics:templates/statistics_header}');
-    SimpleSAML\Logger::warning('Missing configuration: config.php - instance_name is not set.');
+    SimpleSAML_Logger::warning('Missing configuration: config.php - instance_name is not set.');
 }
 
 $this->data['jquery'] = array('core' => TRUE, 'ui' => TRUE, 'css' => TRUE);
-$this->data['head'] = '<link rel="stylesheet"  media="screen" type="text/css" href="' . SimpleSAML\Module::getModuleUrl('proxystatistics/statisticsproxy.css')  . '" />';
+$this->data['head'] = '<link rel="stylesheet"  media="screen" type="text/css" href="' . SimpleSAML_Module::getModuleUrl('proxystatistics/statisticsproxy.css')  . '" />';
 $this->data['head'] .='';
 $this->data['head'] .= '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>';
 $this->data['head'] .= '<script type="text/javascript">

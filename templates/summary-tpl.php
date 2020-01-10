@@ -9,7 +9,7 @@ $lastDays = $this->data['lastDays'];
 
 ?>
 
-<link rel="stylesheet"  media="screen" type="text/css" href="<?php SimpleSAML\Module::getModuleUrl('proxystatistics/statisticsproxy.css')?>" />
+<link rel="stylesheet"  media="screen" type="text/css" href="<?php SimpleSAML_Module::getModuleUrl('proxystatistics/statisticsproxy.css')?>" />
 
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart', 'controls', 'table']});

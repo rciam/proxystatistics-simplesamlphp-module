@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+[Added]
+- Use SimpleSAML\Database library
+- Support for PostgreSQL queries
 
 ## [v2.0.0]
 [Added]
