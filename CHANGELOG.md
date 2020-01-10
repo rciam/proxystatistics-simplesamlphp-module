@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 [Added]
 - Use SimpleSAML\Database library
 - Support for PostgreSQL queries
+- Replace entityID with the RequesterID for the OIDC Clients
 
 ## [v2.0.0]
 [Added]
