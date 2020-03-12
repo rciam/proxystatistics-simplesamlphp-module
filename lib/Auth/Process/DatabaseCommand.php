@@ -16,13 +16,14 @@ class DatabaseCommand
         $statisticsTableName = $conn->applyPrefix($databaseConnector->getStatisticsTableName());
         $identityProvidersMapTableName = $conn->applyPrefix($databaseConnector->getIdentityProvidersMapTableName());
         $serviceProvidersMapTableName = $conn->applyPrefix($databaseConnector->getServiceProvidersMapTableName());
-        if (is_null($request['Attributes']['authnAuthority'][0]) || empty($request['Attributes']['authnAuthority'][0])) {
+        if (!empty($request['saml:sp:IdP'])) {
             $idpEntityID = $request['saml:sp:IdP'];
-            $idpName = $request['Attributes']['sourceIdPName'][0];
+            $idpMetadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler()->getMetaData($idpEntityID, 'saml20-idp-remote');
         } else {
-            $idpEntityID = $request['Attributes']['authnAuthority'][0];
-            $idpName = null;
+            $idpEntityID = $request['Source']['entityid'];
+            $idpMetadata = $request['Source'];
         }
+        $idpName = self::getIdPDisplayName($idpMetadata);
         if (!empty($request['saml:RequesterID'])) {
             if (!empty($databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $databaseConnector->getOidcIssuer()) !== false)) {
                 $spEntityId = str_replace($databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
@@ -352,6 +353,32 @@ class DatabaseCommand
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "['" . str_replace("'", "\'", $row["idpname"]) . "', '" . $row["sourceidp"] . "', " . $row["count"] . "],";
         }
+    }
+
+    public static function getIdPDisplayName($idpMetadata)
+    {
+        if (!empty($idpMetadata['UIInfo']['DisplayName'])) {
+            $displayName = $idpMetadata['UIInfo']['DisplayName'];
+            // Should always be an array of language code -> translation
+            assert('is_array($displayName)');
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($displayName['en'])) {
+                return $displayName['en'];
+            }
+        }
+
+        if (!empty($idpMetadata['name'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($idpMetadata['name']['en'])) {
+                return $idpMetadata['name']['en'];
+            } else {
+                return $idpMetadata['name'];
+            }
+        }
+
+        return $idpMetadata['entityid'];
     }
 
 }

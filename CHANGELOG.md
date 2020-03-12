@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 [Added]
+- Get IdP's friendly name from metadata
+
+## [Unreleased]
+[Added]
 - Use SimpleSAML\Database library
 - Support for PostgreSQL queries
 - Replace entityID with the RequesterID for the OIDC Clients
