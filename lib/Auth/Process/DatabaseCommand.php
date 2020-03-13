@@ -379,7 +379,7 @@ class DatabaseCommand
             }
         }
 
-        return $idpMetadata['entityid'];
+        return null;
     }
 
     public static function getSPDisplayName($spMetadata) 
@@ -404,7 +404,7 @@ class DatabaseCommand
             }
         }
 
-        return $spMetadata['entityid'];
+        return null;
     }
 
 }
