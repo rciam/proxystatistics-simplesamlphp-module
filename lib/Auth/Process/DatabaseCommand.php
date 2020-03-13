@@ -16,23 +16,25 @@ class DatabaseCommand
         $statisticsTableName = $conn->applyPrefix($databaseConnector->getStatisticsTableName());
         $identityProvidersMapTableName = $conn->applyPrefix($databaseConnector->getIdentityProvidersMapTableName());
         $serviceProvidersMapTableName = $conn->applyPrefix($databaseConnector->getServiceProvidersMapTableName());
-        if (is_null($request['Attributes']['authnAuthority'][0]) || empty($request['Attributes']['authnAuthority'][0])) {
+        if (!empty($request['saml:sp:IdP'])) {
             $idpEntityID = $request['saml:sp:IdP'];
-            $idpName = $request['Attributes']['sourceIdPName'][0];
+            $idpMetadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler()->getMetaData($idpEntityID, 'saml20-idp-remote');
         } else {
-            $idpEntityID = $request['Attributes']['authnAuthority'][0];
-            $idpName = null;
+            $idpEntityID = $request['Source']['entityid'];
+            $idpMetadata = $request['Source'];
         }
+        $idpName = self::getIdPDisplayName($idpMetadata);
         if (!empty($request['saml:RequesterID'])) {
             if (!empty($databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $databaseConnector->getOidcIssuer()) !== false)) {
                 $spEntityId = str_replace($databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
+                $spName = null;
             } else {
                 $spEntityId = $request['saml:RequesterID'][0];
+                $spName = self::getSPDisplayName($request['Destination']);
             }
-            $spName = $spEntityId; // TODO: Improve friendly name
         } else {
             $spEntityId = $request['Destination']['entityid'];
-            $spName = $request['Destination']['name']['en'];
+            $spName = self::getSPDisplayName($request['Destination']);
         }
         $year = $date->format('Y');
         $month = $date->format('m');
@@ -352,6 +354,57 @@ class DatabaseCommand
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "['" . str_replace("'", "\'", $row["idpname"]) . "', '" . $row["sourceidp"] . "', " . $row["count"] . "],";
         }
+    }
+
+    public static function getIdPDisplayName($idpMetadata)
+    {
+        if (!empty($idpMetadata['UIInfo']['DisplayName'])) {
+            $displayName = $idpMetadata['UIInfo']['DisplayName'];
+            // Should always be an array of language code -> translation
+            assert('is_array($displayName)');
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($displayName['en'])) {
+                return $displayName['en'];
+            }
+        }
+
+        if (!empty($idpMetadata['name'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($idpMetadata['name']['en'])) {
+                return $idpMetadata['name']['en'];
+            } else {
+                return $idpMetadata['name'];
+            }
+        }
+
+        return null;
+    }
+
+    public static function getSPDisplayName($spMetadata) 
+    {
+        if (!empty($spMetadata['name'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($spMetadata['name']['en'])) {
+                return $spMetadata['name']['en'];
+            } else {
+                return $spMetadata['name'];
+            }
+        }
+
+        if (!empty($spMetadata['OrganizationDisplayName'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($spMetadata['OrganizationDisplayName']['en'])) {
+                return $spMetadata['OrganizationDisplayName']['en'];
+            } else {
+                return $spMetadata['OrganizationDisplayName'];
+            }
+        }
+
+        return null;
     }
 
 }
