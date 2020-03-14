@@ -1,12 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v2.0.2-rciam]
 [Added]
-- Get IdP's friendly name from metadata
-- Get SP's friendly name from metadata
+- Get IdP's friendly name from SAML metadata
+- Get SP's friendly name from SAML metadata
 
-## [Unreleased]
+## [v2.0.1-rciam]
 [Added]
 - Use SimpleSAML\Database library
 - Support for PostgreSQL queries
