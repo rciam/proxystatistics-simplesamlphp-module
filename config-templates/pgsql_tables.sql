@@ -21,7 +21,13 @@ CREATE TABLE identityprovidersmap (
     name character varying(255) NOT NULL
 );
 
+ALTER TABLE identityprovidersmap
+    ADD CONSTRAINT identityprovidersmap_pk PRIMARY KEY (entityid);
+
 CREATE TABLE serviceprovidersmap (
     identifier character varying(255) NOT NULL,
     name character varying(255) NOT NULL
 );
+
+ALTER TABLE serviceprovidersmap
+    ADD CONSTRAINT serviceprovidersmap_pk PRIMARY KEY (identifier);
