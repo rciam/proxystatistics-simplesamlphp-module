@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v2.0.3-rciam]
+[Fixed]
+- Fix PostgreSQL schema for IdP/SP friendly name tables
+
 ## [v2.0.2-rciam]
 [Added]
 - Get IdP's friendly name from SAML metadata
