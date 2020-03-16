@@ -18,10 +18,12 @@ CREATE INDEX statistics_i5 ON statistics (year,month,day);
 --Tables for mapping identifier to name
 CREATE TABLE identityprovidersmap (
     entityid character varying(255) NOT NULL,
-    name character varying(255) NOT NULL
+    name character varying(255) NOT NULL,
+    PRIMARY KEY (entityid)
 );
 
 CREATE TABLE serviceprovidersmap (
     identifier character varying(255) NOT NULL,
-    name character varying(255) NOT NULL
+    name character varying(255) NOT NULL,
+    PRIMARY KEY (identifier)
 );
