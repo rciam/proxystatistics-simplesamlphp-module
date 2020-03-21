@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 #### Added
 - Add support for PostgreSQL queries
+- Replace entityID with the RequesterID for the OIDC Clients
 
 ## [v3.2.1]
 #### Fixed

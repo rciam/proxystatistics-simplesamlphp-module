@@ -86,8 +86,17 @@ class DatabaseCommand
             $idpEntityID = $request['saml:sp:IdP'];
         }
         if ($this->databaseConnector->getMode() !== 'SP') {
-            $spEntityId = $request['Destination']['entityid'];
-            $spName = isset($request['Destination']['name']) ? $request['Destination']['name']['en'] : '';
+            if (!empty($request['saml:RequesterID'])) {
+                if (!empty($this->databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $this->databaseConnector->getOidcIssuer()) !== false)) {
+                    $spEntityId = str_replace($this->databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
+                } else {
+                    $spEntityId = $request['saml:RequesterID'][0];
+                }
+                $spName = null; // TODO: Improve friendly name
+            } else {
+                $spEntityId = $request['Destination']['entityid'];
+                $spName = isset($request['Destination']['name']) ? $request['Destination']['name']['en'] : '';
+            }
         }
 
         if ($this->databaseConnector->getMode() === 'IDP') {

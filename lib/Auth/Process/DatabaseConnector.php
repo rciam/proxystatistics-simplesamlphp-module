@@ -26,6 +26,7 @@ class DatabaseConnector
     private $detailedDays;
     private $userIdAttribute;
     private $conn = null;
+    private $oidcIss;
 
     const CONFIG_FILE_NAME = 'module_statisticsproxy.php';
     /** @deprecated */
@@ -60,6 +61,7 @@ class DatabaseConnector
     const SP_NAME = 'spName';
     const DETAILED_DAYS = 'detailedDays';
     const USER_ID_ATTRIBUTE = 'userIdAttribute';
+    const OIDC_ISS = 'oidcIssuer';
 
     public function __construct()
     {
@@ -105,6 +107,7 @@ class DatabaseConnector
         $this->spName = $conf->getString(self::SP_NAME, '');
         $this->detailedDays = $conf->getInteger(self::DETAILED_DAYS, 0);
         $this->userIdAttribute = $conf->getString(self::USER_ID_ATTRIBUTE, 'uid');
+        $this->oidcIss = $conf->getString(self::OIDC_ISS, null);
     }
 
     public function getConnection()
@@ -172,4 +175,9 @@ class DatabaseConnector
     {
         return $this->userIdAttribute;
     }
+
+    public function getOidcIssuer()
+	{
+		return $this->oidcIss;
+	}
 }
