@@ -4,6 +4,7 @@ namespace SimpleSAML\Module\proxystatistics\Auth\Process;
 
 use SimpleSAML\Error\Exception;
 use SimpleSAML\Logger;
+use SimpleSAML\Metadata\MetaDataStorageHandler;
 use PDO;
 
 /**
@@ -82,8 +83,14 @@ class DatabaseCommand
             throw new Exception('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
         }
         if ($this->databaseConnector->getMode() !== 'IDP') {
-            $idpName = $request['Attributes']['sourceIdPName'][0];
-            $idpEntityID = $request['saml:sp:IdP'];
+            if (!empty($request['saml:sp:IdP'])) {
+                $idpEntityID = $request['saml:sp:IdP'];
+                $idpMetadata = MetaDataStorageHandler::getMetadataHandler()->getMetaData($idpEntityID, 'saml20-idp-remote');
+            } else {
+                $idpEntityID = $request['Source']['entityid'];
+                $idpMetadata = $request['Source'];
+            }
+            $idpName = self::getIdPDisplayName($idpMetadata);
         }
         if ($this->databaseConnector->getMode() !== 'SP') {
             if (!empty($request['saml:RequesterID'])) {
@@ -332,5 +339,31 @@ class DatabaseCommand
             self::addDaysRange($this->databaseConnector->getDetailedDays(), $this->dbDriver, $query, $params, true);
             return $this->conn->write($query, $params);
         }
+    }
+
+    public static function getIdPDisplayName($idpMetadata)
+    {
+        if (!empty($idpMetadata['UIInfo']['DisplayName'])) {
+            $displayName = $idpMetadata['UIInfo']['DisplayName'];
+            // Should always be an array of language code -> translation
+            assert(is_array($displayName));
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($displayName['en'])) {
+                return $displayName['en'];
+            }
+        }
+
+        if (!empty($idpMetadata['name'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($idpMetadata['name']['en'])) {
+                return $idpMetadata['name']['en'];
+            } else {
+                return $idpMetadata['name'];
+            }
+        }
+
+        return null;
     }
 }
