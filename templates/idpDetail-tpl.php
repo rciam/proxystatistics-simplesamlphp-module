@@ -1,7 +1,6 @@
 <?php
 
-use SimpleSAML\Module\proxystatistics\Auth\Process\DatabaseCommand;
-use SimpleSAML\Module;
+include dirname(__DIR__)."/lib/Auth/Process/DatabaseCommand.php";
 
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
@@ -83,5 +82,5 @@ $this->includeAtTemplateBase('includes/header.php');
     </body>
 <?php
 $this->data['htmlinject']['htmlContentPost'][]
-    = '<script type="text/javascript" src="' . Module::getMOduleUrl('proxystatistics/index.js') . '"></script>';
+    = '<script type="text/javascript" src="' . SimpleSAML_Module::getMOduleUrl('proxystatistics/index.js') . '"></script>';
 $this->includeAtTemplateBase('includes/footer.php');

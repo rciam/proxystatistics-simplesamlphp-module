@@ -1,11 +1,6 @@
 <?php
 
-namespace SimpleSAML\Module\proxystatistics\Auth\Process;
-
-use SimpleSAML\Error\Exception;
-use SimpleSAML\Logger;
-use SimpleSAML\Metadata\MetaDataStorageHandler;
-use PDO;
+include ("DatabaseConnector.php");
 
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
@@ -80,12 +75,12 @@ class DatabaseCommand
     public function insertLogin(&$request, &$date)
     {
         if (!in_array($this->databaseConnector->getMode(), ['PROXY', 'IDP', 'SP'])) {
-            throw new Exception('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
+            throw new SimpleSAML_Error_Exception('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
         }
         if ($this->databaseConnector->getMode() !== 'IDP') {
             if (!empty($request['saml:sp:IdP'])) {
                 $idpEntityID = $request['saml:sp:IdP'];
-                $idpMetadata = MetaDataStorageHandler::getMetadataHandler()->getMetaData($idpEntityID, 'saml20-idp-remote');
+                $idpMetadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler()->getMetaData($idpEntityID, 'saml20-idp-remote');
             } else {
                 $idpEntityID = $request['Source']['entityid'];
                 $idpMetadata = $request['Source'];
@@ -120,7 +115,7 @@ class DatabaseCommand
         $day = $date->format('d');
 
         if (empty($idpEntityID) || empty($spEntityId)) {
-            Logger::error(
+            SimpleSAML_Logger::error(
                 "'idpEntityId' or 'spEntityId'" .
                 " is empty and login log wasn't inserted into the database."
             );
@@ -128,7 +123,7 @@ class DatabaseCommand
             $idAttribute = $this->databaseConnector->getUserIdAttribute();
             $userId = isset($request['Attributes'][$idAttribute]) ? $request['Attributes'][$idAttribute][0] : null;
             if ($this->writeLogin($year, $month, $day, $idpEntityID, $spEntityId, $userId) === false) {
-                Logger::error("The login log wasn't inserted into table: " . $this->statisticsTableName . ".");
+                SimpleSAML_Logger::error("The login log wasn't inserted into table: " . $this->statisticsTableName . ".");
             }
 
             if (!empty($idpName)) {

@@ -1,12 +1,5 @@
 <?php
 
-namespace SimpleSAML\Module\proxystatistics\Auth\Process;
-
-use SimpleSAML\Configuration;
-use SimpleSAML\Database;
-use SimpleSAML\Logger;
-use PDO;
-
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
  */
@@ -65,7 +58,7 @@ class DatabaseConnector
 
     public function __construct()
     {
-        $conf = Configuration::getConfig(self::CONFIG_FILE_NAME);
+        $conf = SimpleSAML_Configuration::getConfig(self::CONFIG_FILE_NAME);
         $this->storeConfig = $conf->getArray(self::STORE, null);
 
         // TODO: remove
@@ -81,7 +74,7 @@ class DatabaseConnector
                 'database.password' => $conf->getString(self::PASSWORD),
             ];
             if ($conf->getBoolean(self::ENCRYPTION, false)) {
-                Logger::debug("Getting connection with encryption.");
+                SimpleSAML_Logger::debug("Getting connection with encryption.");
                 $this->storeConfig['database.driver_options'] = [
                     PDO::MYSQL_ATTR_SSL_KEY => $conf->getString(self::SSL_KEY, ''),
                     PDO::MYSQL_ATTR_SSL_CERT => $conf->getString(self::SSL_CERT, ''),
@@ -90,10 +83,10 @@ class DatabaseConnector
                 ];
             }
 
-            Logger::debug("Deprecated option(s) used for proxystatistics. Please use the store option.");
+            SimpleSAML_Logger::debug("Deprecated option(s) used for proxystatistics. Please use the store option.");
         }
 
-        $this->storeConfig = Configuration::loadFromArray($this->storeConfig);
+        $this->storeConfig = SimpleSAML_Configuration::loadFromArray($this->storeConfig);
         $this->databaseDsn = $this->storeConfig->getString('database.dsn');
 
         $this->statisticsTableName = $conf->getString(self::STATS_TABLE_NAME);
@@ -112,7 +105,7 @@ class DatabaseConnector
 
     public function getConnection()
     {
-        return Database::getInstance($this->storeConfig);
+        return SimpleSAML\Database::getInstance($this->storeConfig);
     }
 
     public function getStatisticsTableName()

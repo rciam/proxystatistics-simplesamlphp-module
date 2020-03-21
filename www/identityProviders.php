@@ -1,17 +1,13 @@
 <?php
 
-use SimpleSAML\Configuration;
-use SimpleSAML\Session;
-use SimpleSAML\XHTML\Template;
-
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
  */
 
-$config = Configuration::getInstance();
-$session = Session::getSessionFromRequest();
+$config = SimpleSAML_Configuration::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 
-$t = new Template($config, 'proxystatistics:identityProviders-tpl.php');
+$t = new SimpleSAML_XHTML_Template($config, 'proxystatistics:identityProviders-tpl.php');
 $t->data['lastDays'] = filter_input(
     INPUT_GET,
     'lastDays',

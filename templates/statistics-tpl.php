@@ -1,9 +1,6 @@
 <?php
 
-use SimpleSAML\Configuration;
-use SimpleSAML\Module;
-use SimpleSAML\Logger;
-use SimpleSAML\Module\proxystatistics\Auth\Process\DatabaseCommand;
+include dirname(__DIR__)."/lib/Auth/Process/DatabaseCommand.php";
 
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
@@ -13,14 +10,14 @@ use SimpleSAML\Module\proxystatistics\Auth\Process\DatabaseCommand;
 const CONFIG_FILE_NAME = 'config.php';
 const INSTANCE_NAME = 'instance_name';
 
-$config = Configuration::getConfig(CONFIG_FILE_NAME);
+$config = SimpleSAML_Configuration::getConfig(CONFIG_FILE_NAME);
 $instanceName = $config->getString(INSTANCE_NAME, null);
 if (!is_null($instanceName)) {
     $this->data['header'] = $instanceName . ' ' .
         $this->t('{proxystatistics:Proxystatistics:templates/statistics_header}');
 } else {
     $this->data['header'] = $this->t('{proxystatistics:Proxystatistics:templates/statistics_header}');
-    Logger::warning('Missing configuration: config.php - instance_name is not set.');
+    SimpleSAML_Logger::warning('Missing configuration: config.php - instance_name is not set.');
 }
 
 require_once 'charts.include.php';
@@ -73,6 +70,6 @@ $this->includeAtTemplateBase('includes/header.php');
 
 <?php
 $this->data['htmlinject']['htmlContentPost'][]
-    = '<script type="text/javascript" src="' . Module::getMOduleUrl('proxystatistics/index.js') . '"></script>';
+    = '<script type="text/javascript" src="' . SimpleSAML_Module::getMOduleUrl('proxystatistics/index.js') . '"></script>';
 $this->includeAtTemplateBase('includes/footer.php');
 ?>
