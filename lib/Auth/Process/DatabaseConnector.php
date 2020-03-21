@@ -62,6 +62,7 @@ class DatabaseConnector
     const DETAILED_DAYS = 'detailedDays';
     const USER_ID_ATTRIBUTE = 'userIdAttribute';
     const OIDC_ISS = 'oidcIssuer';
+    const TABLE_PREFIX = 'database.prefix';
 
     public function __construct()
     {
@@ -117,22 +118,22 @@ class DatabaseConnector
 
     public function getStatisticsTableName()
     {
-        return $this->statisticsTableName;
+        return $this->storeConfig->getString(self::TABLE_PREFIX, '') . $this->statisticsTableName;
     }
 
     public function getDetailedStatisticsTableName()
     {
-        return $this->detailedStatisticsTableName;
+        return $this->storeConfig->getString(self::TABLE_PREFIX, '') . $this->detailedStatisticsTableName;
     }
 
     public function getIdentityProvidersMapTableName()
     {
-        return $this->identityProvidersMapTableName;
+        return $this->storeConfig->getString(self::TABLE_PREFIX, '') . $this->identityProvidersMapTableName;
     }
 
     public function getServiceProvidersMapTableName()
     {
-        return $this->serviceProvidersMapTableName;
+        return $this->storeConfig->getString(self::TABLE_PREFIX, '') . $this->serviceProvidersMapTableName;
     }
 
     public function getDbDriver()

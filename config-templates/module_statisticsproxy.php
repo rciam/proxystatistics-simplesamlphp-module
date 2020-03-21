@@ -47,6 +47,11 @@ $config = [
         'database.username' => 'stats',
         'database.password' => 'stats',
 
+        /*
+         * (Optional) Table prefix
+         */
+        'database.prefix' => '',
+
         /**
          * Configuration for SSL
          * If you want to use SSL you must filled this value and uncomment block of code
@@ -63,6 +68,32 @@ $config = [
             PDO::MYSQL_ATTR_SSL_CAPATH => '',
         ],
         */
+
+        /*
+         * True or false if you would like a persistent database connection
+         */
+        'database.persistent' => false,
+
+        /*
+         * Database slave configuration is optional as well. If you are only
+         * running a single database server, leave this blank. If you have
+         * a master/slave configuration, you can define as many slave servers
+         * as you want here. Slaves will be picked at random to be queried from.
+         *
+         * Configuration options in the slave array are exactly the same as the
+         * options for the master (shown above) with the exception of the table
+         * prefix and driver options.
+         */
+        'database.slaves' => [
+            /*
+            [
+                'dsn' => 'mysql:host=myslave;dbname=saml',
+                'username' => 'simplesamlphp',
+                'password' => 'secret',
+                'persistent' => false,
+            ],
+            */
+        ],
     ],
 
     /*
@@ -80,7 +111,7 @@ $config = [
     /*
      * Fill the table name for statistics
      */
-    'statisticsTableName' => 'statisticsTableName',
+    'statisticsTableName' => 'statistics',
 
     /*
      * Fill the table name for detailed statistics
