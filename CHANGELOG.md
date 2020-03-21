@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+#### Added
+- Add support for PostgreSQL queries
 
 ## [v3.2.1]
 #### Fixed

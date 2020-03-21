@@ -13,6 +13,7 @@ use PDO;
 
 class DatabaseConnector
 {
+    private $databaseDsn;
     private $statisticsTableName;
     private $detailedStatisticsTableName;
     private $identityProvidersMapTableName;
@@ -91,6 +92,7 @@ class DatabaseConnector
         }
 
         $this->storeConfig = Configuration::loadFromArray($this->storeConfig);
+        $this->databaseDsn = $this->storeConfig->getString('database.dsn');
 
         $this->statisticsTableName = $conf->getString(self::STATS_TABLE_NAME);
         $this->detailedStatisticsTableName = $conf->getString(self::DETAILED_STATS_TABLE_NAME, 'statistics_detail');
@@ -129,6 +131,12 @@ class DatabaseConnector
     {
         return $this->serviceProvidersMapTableName;
     }
+
+    public function getDbDriver()
+	{
+		preg_match('/.+?(?=:)/', $this->databaseDsn, $driver);
+		return $driver[0];
+	}
 
     public function getMode()
     {
