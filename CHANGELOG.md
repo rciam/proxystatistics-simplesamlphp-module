@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Add support for PostgreSQL queries
 - Replace entityID with the RequesterID for the OIDC Clients
 - Get IdP's friendly name from metadata
+- Get SP's friendly name from metadata
 
 ## [v3.2.1]
 #### Fixed

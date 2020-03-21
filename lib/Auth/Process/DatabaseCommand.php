@@ -96,13 +96,14 @@ class DatabaseCommand
             if (!empty($request['saml:RequesterID'])) {
                 if (!empty($this->databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $this->databaseConnector->getOidcIssuer()) !== false)) {
                     $spEntityId = str_replace($this->databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
+                    $spName = null;
                 } else {
                     $spEntityId = $request['saml:RequesterID'][0];
+                    $spName = self::getSPDisplayName($request['Destination']);
                 }
-                $spName = null; // TODO: Improve friendly name
             } else {
                 $spEntityId = $request['Destination']['entityid'];
-                $spName = isset($request['Destination']['name']) ? $request['Destination']['name']['en'] : '';
+                $spName = self::getSPDisplayName($request['Destination']);
             }
         }
 
@@ -361,6 +362,31 @@ class DatabaseCommand
                 return $idpMetadata['name']['en'];
             } else {
                 return $idpMetadata['name'];
+            }
+        }
+
+        return null;
+    }
+
+    public static function getSPDisplayName($spMetadata) 
+    {
+        if (!empty($spMetadata['name'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($spMetadata['name']['en'])) {
+                return $spMetadata['name']['en'];
+            } else {
+                return $spMetadata['name'];
+            }
+        }
+
+        if (!empty($spMetadata['OrganizationDisplayName'])) {
+            // TODO: Use \SimpleSAML\Locale\Translate::getPreferredTranslation()
+            // in SSP 2.0
+            if (!empty($spMetadata['OrganizationDisplayName']['en'])) {
+                return $spMetadata['OrganizationDisplayName']['en'];
+            } else {
+                return $spMetadata['OrganizationDisplayName'];
             }
         }
 
