@@ -98,6 +98,11 @@ $config = [
      */
     'serviceProvidersMapTableName' => 'serviceProvidersMap',
 
+    /*
+     * Fill the entityID of OpenID Connect Provider
+     */
+    'oidcIssuer' => 'http://example.org/openidconnect/sp',
+
     /**
      * Authentication source name if authentication should be required.
      * Defaults to empty string.

@@ -1,10 +1,5 @@
 <?php
 
-use SimpleSAML\Configuration;
-use SimpleSAML\Session;
-use SimpleSAML\XHTML\Template;
-use SimpleSAML\Logger;
-
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
  */
@@ -12,13 +7,13 @@ use SimpleSAML\Logger;
 const CONFIG_FILE_NAME = 'module_statisticsproxy.php';
 const MODE = 'mode';
 
-$configMode = Configuration::getConfig(CONFIG_FILE_NAME);
-$config = Configuration::getInstance();
-$session = Session::getSessionFromRequest();
+$configMode = SimpleSAML_Configuration::getConfig(CONFIG_FILE_NAME);
+$config = SimpleSAML_Configuration::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 
 $mode = $configMode->getString(MODE, 'PROXY');
 
-$t = new Template($config, 'proxystatistics:summary-tpl.php');
+$t = new SimpleSAML_XHTML_Template($config, 'proxystatistics:summary-tpl.php');
 
 $t->data['lastDays'] = filter_input(
     INPUT_GET,
@@ -56,7 +51,7 @@ if ($mode === 'IDP') {
         'serviceProvidersGraph' => 'col-md-12'
     ];
 } else {
-    Logger::error('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
+    SimpleSAML_Logger::error('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
 }
 
 $t->show();

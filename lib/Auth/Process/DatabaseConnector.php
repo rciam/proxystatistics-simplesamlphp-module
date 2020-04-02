@@ -1,18 +1,12 @@
 <?php
 
-namespace SimpleSAML\Module\proxystatistics\Auth\Process;
-
-use SimpleSAML\Configuration;
-use SimpleSAML\Database;
-use SimpleSAML\Logger;
-use PDO;
-
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
  */
 
 class DatabaseConnector
 {
+    private $databaseDsn;
     private $statisticsTableName;
     private $detailedStatisticsTableName;
     private $identityProvidersMapTableName;
@@ -25,6 +19,7 @@ class DatabaseConnector
     private $detailedDays;
     private $userIdAttribute;
     private $conn = null;
+    private $oidcIss;
 
     const CONFIG_FILE_NAME = 'module_statisticsproxy.php';
     /** @deprecated */
@@ -59,10 +54,11 @@ class DatabaseConnector
     const SP_NAME = 'spName';
     const DETAILED_DAYS = 'detailedDays';
     const USER_ID_ATTRIBUTE = 'userIdAttribute';
+    const OIDC_ISS = 'oidcIssuer';
 
     public function __construct()
     {
-        $conf = Configuration::getConfig(self::CONFIG_FILE_NAME);
+        $conf = SimpleSAML_Configuration::getConfig(self::CONFIG_FILE_NAME);
         $this->storeConfig = $conf->getArray(self::STORE, null);
 
         // TODO: remove
@@ -78,7 +74,7 @@ class DatabaseConnector
                 'database.password' => $conf->getString(self::PASSWORD),
             ];
             if ($conf->getBoolean(self::ENCRYPTION, false)) {
-                Logger::debug("Getting connection with encryption.");
+                SimpleSAML_Logger::debug("Getting connection with encryption.");
                 $this->storeConfig['database.driver_options'] = [
                     PDO::MYSQL_ATTR_SSL_KEY => $conf->getString(self::SSL_KEY, ''),
                     PDO::MYSQL_ATTR_SSL_CERT => $conf->getString(self::SSL_CERT, ''),
@@ -87,10 +83,11 @@ class DatabaseConnector
                 ];
             }
 
-            Logger::debug("Deprecated option(s) used for proxystatistics. Please use the store option.");
+            SimpleSAML_Logger::debug("Deprecated option(s) used for proxystatistics. Please use the store option.");
         }
 
-        $this->storeConfig = Configuration::loadFromArray($this->storeConfig);
+        $this->storeConfig = SimpleSAML_Configuration::loadFromArray($this->storeConfig);
+        $this->databaseDsn = $this->storeConfig->getString('database.dsn');
 
         $this->statisticsTableName = $conf->getString(self::STATS_TABLE_NAME);
         $this->detailedStatisticsTableName = $conf->getString(self::DETAILED_STATS_TABLE_NAME, 'statistics_detail');
@@ -103,11 +100,12 @@ class DatabaseConnector
         $this->spName = $conf->getString(self::SP_NAME, '');
         $this->detailedDays = $conf->getInteger(self::DETAILED_DAYS, 0);
         $this->userIdAttribute = $conf->getString(self::USER_ID_ATTRIBUTE, 'uid');
+        $this->oidcIss = $conf->getString(self::OIDC_ISS, null);
     }
 
     public function getConnection()
     {
-        return Database::getInstance($this->storeConfig);
+        return SimpleSAML\Database::getInstance($this->storeConfig);
     }
 
     public function getStatisticsTableName()
@@ -129,6 +127,12 @@ class DatabaseConnector
     {
         return $this->serviceProvidersMapTableName;
     }
+
+    public function getDbDriver()
+	{
+		preg_match('/.+?(?=:)/', $this->databaseDsn, $driver);
+		return $driver[0];
+	}
 
     public function getMode()
     {
@@ -164,4 +168,9 @@ class DatabaseConnector
     {
         return $this->userIdAttribute;
     }
+
+    public function getOidcIssuer()
+	{
+		return $this->oidcIss;
+	}
 }

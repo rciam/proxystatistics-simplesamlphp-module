@@ -1,9 +1,5 @@
 <?php
 
-use SimpleSAML\Configuration;
-use SimpleSAML\Session;
-use SimpleSAML\XHTML\Template;
-
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
  */
@@ -11,20 +7,20 @@ use SimpleSAML\XHTML\Template;
 const CONFIG_FILE_NAME_STATISTICSPROXY = 'module_statisticsproxy.php';
 const MODE = 'mode';
 
-$config = Configuration::getInstance();
-$session = Session::getSessionFromRequest();
+$config = SimpleSAML_Configuration::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 
-$configStatisticsproxy = Configuration::getConfig(CONFIG_FILE_NAME_STATISTICSPROXY);
+$configStatisticsproxy = SimpleSAML_Configuration::getConfig(CONFIG_FILE_NAME_STATISTICSPROXY);
 
 $authSource = $configStatisticsproxy->getString('requireAuth.source', '');
 if ($authSource) {
-    $as = new \SimpleSAML\Auth\Simple($authSource);
+    $as = new SimpleSAML_Auth_Simple($authSource);
     $as->requireAuth();
 }
 
 $mode = $configStatisticsproxy->getString(MODE, 'PROXY');
 
-$t = new Template($config, 'proxystatistics:statistics-tpl.php');
+$t = new SimpleSAML_XHTML_Template($config, 'proxystatistics:statistics-tpl.php');
 
 $lastDays = filter_input(
     INPUT_POST,

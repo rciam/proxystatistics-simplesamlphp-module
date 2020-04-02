@@ -1,4 +1,5 @@
 <?php
+include dirname(__DIR__)."/lib/Auth/Process/DatabaseCommand.php";
 
 /**
  * Hook to run a cron job.
@@ -9,14 +10,14 @@
 function proxystatistics_hook_cron(&$croninfo)
 {
     if ($croninfo['tag'] !== 'daily') {
-        \SimpleSAML\Logger::debug('cron [proxystatistics]: Skipping cron in cron tag ['.$croninfo['tag'].'] ');
+        SimpleSAML_Logger::debug('cron [proxystatistics]: Skipping cron in cron tag ['.$croninfo['tag'].'] ');
         return;
     }
 
-    \SimpleSAML\Logger::info('cron [proxystatistics]: Running cron in cron tag ['.$croninfo['tag'].'] ');
+    SimpleSAML_Logger::info('cron [proxystatistics]: Running cron in cron tag ['.$croninfo['tag'].'] ');
 
     try {
-        $dbCmd = new \SimpleSAML\Module\proxystatistics\Auth\Process\DatabaseCommand();
+        $dbCmd = new DatabaseCommand();
         $dbCmd->deleteOldDetailedStatistics();
     } catch (\Exception $e) {
         $croninfo['summary'][] = 'Error during deleting old detailed statistics: '.$e->getMessage();

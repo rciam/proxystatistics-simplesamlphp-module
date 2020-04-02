@@ -1,7 +1,5 @@
 <?php
 
-use SimpleSAML\Module;
-
 /**
  * @author Pavel Vyskočil <vyskocilpavel@muni.cz>
  * @author Dominik Baránek <0Baranek.dominik0@gmail.com>
