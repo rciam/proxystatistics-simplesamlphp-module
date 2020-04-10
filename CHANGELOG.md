@@ -1,7 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v2.1.0-rciam] - 2020-04-10
+This version is based on upstream v3.2.1 and is compatible with [SimpleSAMLphp v1.14](https://simplesamlphp.org/docs/1.14/simplesamlphp-changelog)
 #### Added
 - Add support for PostgreSQL queries
 - Replace entityID with the RequesterID for the OIDC Clients
@@ -72,6 +73,21 @@ All notable changes to this project will be documented in this file.
 ## [v2.1.0]
 #### Added
 - Every successfully log in is logged with notice level 
+
+## [v2.0.3-rciam]
+[Fixed]
+- Fix PostgreSQL schema for IdP/SP friendly name tables
+
+## [v2.0.2-rciam]
+[Added]
+- Get IdP's friendly name from SAML metadata
+- Get SP's friendly name from SAML metadata
+
+## [v2.0.1-rciam]
+[Added]
+- Use SimpleSAML\Database library
+- Support for PostgreSQL queries
+- Replace entityID with the RequesterID for the OIDC Clients
 
 ## [v2.0.0]
 #### Added
