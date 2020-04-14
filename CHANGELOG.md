@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Fixed
+- Save RequesterID only for clients of OIDC issuer in configuration
+
 ## [v2.1.0-rciam] - 2020-04-10
 This version is based on upstream v3.2.1 and is compatible with [SimpleSAMLphp v1.14](https://simplesamlphp.org/docs/1.14/simplesamlphp-changelog)
 #### Added

@@ -88,14 +88,9 @@ class DatabaseCommand
             $idpName = self::getIdPDisplayName($idpMetadata);
         }
         if ($this->databaseConnector->getMode() !== 'SP') {
-            if (!empty($request['saml:RequesterID'])) {
-                if (!empty($this->databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $this->databaseConnector->getOidcIssuer()) !== false)) {
-                    $spEntityId = str_replace($this->databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
-                    $spName = null;
-                } else {
-                    $spEntityId = $request['saml:RequesterID'][0];
-                    $spName = self::getSPDisplayName($request['Destination']);
-                }
+            if (!empty($request['saml:RequesterID']) && !empty($this->databaseConnector->getOidcIssuer()) && (strpos($request['Destination']['entityid'], $this->databaseConnector->getOidcIssuer()) !== false)) {
+                $spEntityId = str_replace($this->databaseConnector->getOidcIssuer() . "/", "", $request['saml:RequesterID'][0]);
+                $spName = null;
             } else {
                 $spEntityId = $request['Destination']['entityid'];
                 $spName = self::getSPDisplayName($request['Destination']);
