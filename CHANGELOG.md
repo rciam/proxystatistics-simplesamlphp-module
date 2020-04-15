@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v2.1.1-rciam] - 2020-04-15
 ### Fixed
 - Save RequesterID only for clients of OIDC issuer in configuration
 
