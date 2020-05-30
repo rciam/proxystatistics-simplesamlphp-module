@@ -74,7 +74,7 @@ class DatabaseConnector
                 'database.password' => $conf->getString(self::PASSWORD),
             ];
             if ($conf->getBoolean(self::ENCRYPTION, false)) {
-                SimpleSAML_Logger::debug("Getting connection with encryption.");
+                SimpleSAML\Logger::debug("Getting connection with encryption.");
                 $this->storeConfig['database.driver_options'] = [
                     PDO::MYSQL_ATTR_SSL_KEY => $conf->getString(self::SSL_KEY, ''),
                     PDO::MYSQL_ATTR_SSL_CERT => $conf->getString(self::SSL_CERT, ''),
@@ -83,7 +83,7 @@ class DatabaseConnector
                 ];
             }
 
-            SimpleSAML_Logger::debug("Deprecated option(s) used for proxystatistics. Please use the store option.");
+            SimpleSAML\Logger::debug("Deprecated option(s) used for proxystatistics. Please use the store option.");
         }
 
         $this->storeConfig = SimpleSAML_Configuration::loadFromArray($this->storeConfig);

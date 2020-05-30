@@ -51,7 +51,7 @@ if ($mode === 'IDP') {
         'serviceProvidersGraph' => 'col-md-12'
     ];
 } else {
-    SimpleSAML_Logger::error('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
+    SimpleSAML\Logger::error('Unknown mode is set. Mode has to be one of the following: PROXY, IDP, SP.');
 }
 
 $t->show();

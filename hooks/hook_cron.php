@@ -10,11 +10,11 @@ include dirname(__DIR__)."/lib/Auth/Process/DatabaseCommand.php";
 function proxystatistics_hook_cron(&$croninfo)
 {
     if ($croninfo['tag'] !== 'daily') {
-        SimpleSAML_Logger::debug('cron [proxystatistics]: Skipping cron in cron tag ['.$croninfo['tag'].'] ');
+        SimpleSAML\Logger::debug('cron [proxystatistics]: Skipping cron in cron tag ['.$croninfo['tag'].'] ');
         return;
     }
 
-    SimpleSAML_Logger::info('cron [proxystatistics]: Running cron in cron tag ['.$croninfo['tag'].'] ');
+    SimpleSAML\Logger::info('cron [proxystatistics]: Running cron in cron tag ['.$croninfo['tag'].'] ');
 
     try {
         $dbCmd = new DatabaseCommand();

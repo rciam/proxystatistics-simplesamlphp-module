@@ -45,10 +45,10 @@ class sspmod_proxystatistics_Auth_Process_statistics extends SimpleSAML_Auth_Pro
 
         if (isset($request['perun']['user'])) {
             $user = $request['perun']['user'];
-            SimpleSAML_Logger::notice('UserId: ' . $user->getId() . ', identity: ' .  $eduPersonUniqueId . ', service: '
+            SimpleSAML\Logger::notice('UserId: ' . $user->getId() . ', identity: ' .  $eduPersonUniqueId . ', service: '
                 . $spEntityId . ', external identity: ' . $sourceIdPEppn . ' from ' . $sourceIdPEntityId);
         } else {
-            SimpleSAML_Logger::notice('User identity: ' .  $eduPersonUniqueId . ', service: ' . $spEntityId .
+            SimpleSAML\Logger::notice('User identity: ' .  $eduPersonUniqueId . ', service: ' . $spEntityId .
                 ', external identity: ' . $sourceIdPEppn . ' from ' . $sourceIdPEntityId);
         }
 

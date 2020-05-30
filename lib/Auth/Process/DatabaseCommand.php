@@ -110,7 +110,7 @@ class DatabaseCommand
         $day = $date->format('d');
 
         if (empty($idpEntityID) || empty($spEntityId)) {
-            SimpleSAML_Logger::error(
+            SimpleSAML\Logger::error(
                 "'idpEntityId' or 'spEntityId'" .
                 " is empty and login log wasn't inserted into the database."
             );
@@ -118,7 +118,7 @@ class DatabaseCommand
             $idAttribute = $this->databaseConnector->getUserIdAttribute();
             $userId = isset($request['Attributes'][$idAttribute]) ? $request['Attributes'][$idAttribute][0] : null;
             if ($this->writeLogin($year, $month, $day, $idpEntityID, $spEntityId, $userId) === false) {
-                SimpleSAML_Logger::error("The login log wasn't inserted into table: " . $this->statisticsTableName . ".");
+                SimpleSAML\Logger::error("The login log wasn't inserted into table: " . $this->statisticsTableName . ".");
             }
 
             if (!empty($idpName)) {

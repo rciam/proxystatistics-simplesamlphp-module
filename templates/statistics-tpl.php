@@ -17,7 +17,7 @@ if (!is_null($instanceName)) {
         $this->t('{proxystatistics:Proxystatistics:templates/statistics_header}');
 } else {
     $this->data['header'] = $this->t('{proxystatistics:Proxystatistics:templates/statistics_header}');
-    SimpleSAML_Logger::warning('Missing configuration: config.php - instance_name is not set.');
+    SimpleSAML\Logger::warning('Missing configuration: config.php - instance_name is not set.');
 }
 
 require_once 'charts.include.php';
