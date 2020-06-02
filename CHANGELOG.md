@@ -1,6 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v2.5.0-rciam] - 2020-06-03
+This version is based on upstream v3.2.1 and is compatible with [SimpleSAMLphp v1.15](https://simplesamlphp.org/docs/1.15/simplesamlphp-changelog)
+
+### Changed
+- Replace uses of `SimpleSAML\_Logger` with namespace version 
+
+### Fixed
+- Fix index definitions for `statistics\_detail` table
+
 ## [v2.1.1-rciam] - 2020-04-15
 ### Fixed
 - Save RequesterID only for clients of OIDC issuer in configuration
