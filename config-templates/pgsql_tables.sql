@@ -25,6 +25,7 @@ CREATE TABLE statistics_detail (
 
 CREATE INDEX statistics_detail_i1 ON statistics_detail (sourceIdp);
 CREATE INDEX statistics_detail_i2 ON statistics_detail (service);
+CREATE INDEX statistics_detail_i3 ON statistics_detail (userid);
 
 --Tables for mapping identifier to name
 CREATE TABLE identityprovidersmap (
