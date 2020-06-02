@@ -1,7 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v3.0.0-rciam] - 2020-06-03
+This version is based on upstream v3.2.1 and is compatible with [SimpleSAMLphp v1.17](https://simplesamlphp.org/docs/1.17/simplesamlphp-changelog)
 #### Added
 - Add support for PostgreSQL queries
 - Replace entityID with the RequesterID for the OIDC Clients
