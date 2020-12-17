@@ -24,6 +24,21 @@ CREATE TABLE statistics_detail (
     PRIMARY KEY (year, month, day, sourceIdp, service, user)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE statistics_ip (
+    accessed TIMESTAMP NOT NULL,
+    sourceIdp VARCHAR(255) NOT NULL,
+    service VARCHAR(255) NOT NULL,
+    user VARCHAR(255) NOT NULL,
+    ip VARBINARY(16) NOT NULL,
+    ipVersion VARCHAR(4) NOT NULL,
+    INDEX (accessed),
+    INDEX (sourceIdp),
+    INDEX (service),
+    INDEX (user),
+    INDEX (ipVersion),
+    PRIMARY KEY (accessed, sourceIdp, service, user, ip, ipVersion)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --Tables for mapping identifier to name
 CREATE TABLE identityProvidersMap(
 	entityId VARCHAR(255) NOT NULL,
