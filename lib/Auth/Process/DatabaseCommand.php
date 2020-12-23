@@ -23,10 +23,47 @@ class DatabaseCommand
         $this->dbDriver = $this->databaseConnector->getDbDriver();
         $this->statisticsTableName = $this->databaseConnector->getStatisticsTableName();
         $this->detailedStatisticsTableName = $this->databaseConnector->getDetailedStatisticsTableName();
+        $this->ipStatisticsTableName = $this->databaseConnector->getIpStatisticsTableName();
         $this->identityProvidersMapTableName = $this->databaseConnector->getIdentityProvidersMapTableName();
         $this->serviceProvidersMapTableName = $this->databaseConnector->getServiceProvidersMapTableName();
     }
+    private function writeLoginIp($sourceIdp, $service, $user, $ip, $date)
+    {
+        $params = [
+          'ip' => ($this->dbDriver == 'pgsql' ? inet_pton($ip) : $ip),
+          'sourceIdp' => $sourceIdp,
+          'service' => $service,
+          'accessed' => $date,
+          'ipVersion' => (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? 'ipv4' : 'ipv6')
+        ];
+        if ($this->dbDriver == 'pgsql') {
+          // the word "user" is reserved from PostgreSQL
+          $params['userid'] = $user;
+        } else {
+          $params['user'] = $user;
+        }
+        $table = $this->ipStatisticsTableName;
+        $fields = array_keys($params);
+        $placeholders = array_map(function ($field) {
+          return ':' . $field;
 
+        }, $fields);
+
+        if(empty($params['ip'])) {
+            SimpleSAML_Logger::error("[proxystatistics] Couldn't find ip for storing information to table");
+            return false;
+        }
+        if ($this->dbDriver == 'pgsql') {
+            $query = "INSERT INTO " . $table . " (" . implode(', ', $fields) . ")" .
+              " VALUES (" . implode(', ', $placeholders) . ")";
+        } else {
+           
+            $query = "INSERT INTO " . $table . " (" . implode(', ', $fields) . ")" .
+              " VALUES (" . implode(', ', $placeholders) . ")";
+        }
+
+        return $this->conn->write($query, $params);
+    }
     private function writeLogin($year, $month, $day, $sourceIdp, $service, $user = null)
     {
         $params = [
@@ -108,6 +145,8 @@ class DatabaseCommand
         $year = $date->format('Y');
         $month = $date->format('m');
         $day = $date->format('d');
+        $dateTimestamp = $date->format('Y-m-d H:i:s T');
+        $ip = $_SERVER['HTTP_X_REAL_IP'];
 
         if (empty($idpEntityID) || empty($spEntityId)) {
             SimpleSAML_Logger::error(
@@ -120,7 +159,9 @@ class DatabaseCommand
             if ($this->writeLogin($year, $month, $day, $idpEntityID, $spEntityId, $userId) === false) {
                 SimpleSAML_Logger::error("The login log wasn't inserted into table: " . $this->statisticsTableName . ".");
             }
-
+            if ($this->writeLoginIp($idpEntityID, $spEntityId, $userId, $ip, $dateTimestamp) === false) {
+                SimpleSAML_Logger::error("The login log for ip wasn't inserted into table: " . $this->ipStatisticsTableName . ".");
+            }
             if (!empty($idpName)) {
                 if ($this->dbDriver == 'pgsql') {
                     $query = "INSERT INTO " . $this->identityProvidersMapTableName .
