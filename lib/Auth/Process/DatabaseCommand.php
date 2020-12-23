@@ -30,7 +30,7 @@ class DatabaseCommand
     private function writeLoginIp($sourceIdp, $service, $user, $ip, $date)
     {
         $params = [
-          'ip' => ($this->dbDriver == 'pgsql' ? inet_pton($ip) : $ip),
+          'ip' => ($this->dbDriver == 'pgsql' ? $ip : inet_pton($ip)),
           'sourceIdp' => $sourceIdp,
           'service' => $service,
           'accessed' => $date,
