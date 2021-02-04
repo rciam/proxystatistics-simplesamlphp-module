@@ -19,27 +19,31 @@ class Statistics extends ProcessingFilter
     public function __construct($config, $reserved)
     {
         parent::__construct($config, $reserved);
-
-        if (!isset($config['config'])) {
-            throw new Exception("missing mandatory configuration option 'config'");
-        }
-        $this->config = (array)$config['config'];
+        $this->config = Configuration::getConfig(DatabaseConnector::CONFIG_FILE_NAME);
         $this->reserved = (array)$reserved;
     }
 
     public function process(&$request)
     {
+        // Check if user is in blacklist
+        if ((!empty($this->config->getString('userIdAttribute')) && !empty($request['Attributes'][$this->config->getString('userIdAttribute')]) && !empty($this->config->getArray('userIdBlacklist')) && !empty(array_intersect(
+            $request['Attributes'][$this->config->getString('userIdAttribute')],
+            $this->config->getArray('userIdBlacklist'))))) {
+            Logger::notice("[proxystatistics:proccess] Skipping blacklisted user with id " . var_export($request['Attributes'][$this->config->getString('userIdAttribute')], true));
+            return;
+        }
+
         $dateTime = new DateTime();
         $dbCmd = new DatabaseCommand();
         $dbCmd->insertLogin($request, $dateTime);
         $spEntityId = $request['SPMetadata']['entityid'];
 
-        $eduPersonUniqueId = '';
+        $userIdentity = '';
         $sourceIdPEppn = '';
         $sourceIdPEntityId = '';
 
-        if (isset($request['Attributes']['eduPersonUniqueId'][0])) {
-            $eduPersonUniqueId = $request['Attributes']['eduPersonUniqueId'][0];
+        if (isset($request['Attributes'][$this->config->getString('userIdAttribute')][0])) {
+            $userIdentity = $request['Attributes'][$this->config->getString('userIdAttribute')][0];
         }
         if (isset($request['Attributes']['sourceIdPEppn'][0])) {
             $sourceIdPEppn = $request['Attributes']['sourceIdPEppn'][0];
@@ -50,10 +54,10 @@ class Statistics extends ProcessingFilter
 
         if (isset($request['perun']['user'])) {
             $user = $request['perun']['user'];
-            Logger::notice('UserId: ' . $user->getId() . ', identity: ' .  $eduPersonUniqueId . ', service: '
+            Logger::notice('UserId: ' . $user->getId() . ', identity: ' .  $userIdentity . ', service: '
                 . $spEntityId . ', external identity: ' . $sourceIdPEppn . ' from ' . $sourceIdPEntityId);
         } else {
-            Logger::notice('User identity: ' .  $eduPersonUniqueId . ', service: ' . $spEntityId .
+            Logger::notice('User identity: ' .  $userIdentity . ', service: ' . $spEntityId .
                 ', external identity: ' . $sourceIdPEppn . ' from ' . $sourceIdPEntityId);
         }
 
