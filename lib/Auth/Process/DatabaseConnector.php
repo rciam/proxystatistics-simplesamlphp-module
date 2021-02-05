@@ -34,6 +34,7 @@ class DatabaseConnector
     const DATABASE = 'databaseName';
     const STATS_TABLE_NAME = 'statisticsTableName';
     const DETAILED_STATS_TABLE_NAME = 'detailedStatisticsTableName';
+    const IP_STATS_TABLE_NAME = 'ipStatisticsTableName';
     const IDP_MAP_TABLE_NAME = 'identityProvidersMapTableName';
     const SP_MAP_TABLE_NAME = 'serviceProvidersMapTableName';
     /** @deprecated */
@@ -91,6 +92,7 @@ class DatabaseConnector
 
         $this->statisticsTableName = $conf->getString(self::STATS_TABLE_NAME);
         $this->detailedStatisticsTableName = $conf->getString(self::DETAILED_STATS_TABLE_NAME, 'statistics_detail');
+        $this->ipStatisticsTableName = $conf->getString(self::IP_STATS_TABLE_NAME, 'statistics_ip');
         $this->identityProvidersMapTableName = $conf->getString(self::IDP_MAP_TABLE_NAME);
         $this->serviceProvidersMapTableName = $conf->getString(self::SP_MAP_TABLE_NAME);
         $this->mode = $conf->getString(self::MODE, 'PROXY');
@@ -116,6 +118,11 @@ class DatabaseConnector
     public function getDetailedStatisticsTableName()
     {
         return $this->detailedStatisticsTableName;
+    }
+
+    public function getIpStatisticsTableName()
+    {
+      return $this->ipStatisticsTableName;
     }
 
     public function getIdentityProvidersMapTableName()
