@@ -78,6 +78,11 @@ $config = [
     'userIdAttribute' => 'uid',
 
     /*
+     * Which users should be blacklisted
+     */
+    'userIdBlacklist' => array(),
+
+    /*
      * Fill the table name for statistics
      */
     'statisticsTableName' => 'statisticsTableName',
