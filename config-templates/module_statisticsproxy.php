@@ -120,6 +120,12 @@ $config = [
     'detailedStatisticsTableName' => 'statistics_detail',
 
     /*
+     * Fill the table name for ip statistics
+     * @default
+     */
+    'ipStatisticsTableName' => 'statistics_ip',
+
+    /*
      * Fill the table name for identityProvidersMap
      */
     'identityProvidersMapTableName' => 'identityProvidersMap',
