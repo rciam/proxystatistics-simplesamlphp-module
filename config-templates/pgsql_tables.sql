@@ -1,5 +1,5 @@
 --Statistics for IdPs
-CREATE TABLE statistics (
+CREATE TABLE IF NOT EXISTS statistics (
     year bigint NOT NULL,
     month bigint NOT NULL,
     day bigint NOT NULL,
@@ -9,10 +9,10 @@ CREATE TABLE statistics (
     PRIMARY KEY (year, month, day, sourceIdp, service)
 );
 
-CREATE INDEX statistics_i1 ON statistics (sourceIdp);
-CREATE INDEX statistics_i2 ON statistics (service);
+CREATE INDEX IF NOT EXISTS statistics_i1 ON statistics (sourceIdp);
+CREATE INDEX IF NOT EXISTS statistics_i2 ON statistics (service);
 
-CREATE TABLE statistics_detail (
+CREATE TABLE IF NOT EXISTS statistics_detail (
     year bigint NOT NULL,
     month bigint NOT NULL,
     day bigint NOT NULL,
@@ -23,10 +23,10 @@ CREATE TABLE statistics_detail (
     PRIMARY KEY (year, month, day, sourceIdp, service, userid)
 );
 
-CREATE INDEX statistics_detail_i1 ON statistics (sourceIdp);
-CREATE INDEX statistics_detail_i2 ON statistics (service);
+CREATE INDEX IF NOT EXISTS statistics_detail_i1 ON statistics (sourceIdp);
+CREATE INDEX IF NOT EXISTS statistics_detail_i2 ON statistics (service);
 
-CREATE TABLE statistics_ip (
+CREATE TABLE IF NOT EXISTS statistics_ip (
     accessed timestamptz NOT NULL,
     sourceidp character varying(255) NOT NULL,
     service character varying(255) NOT NULL,
@@ -36,20 +36,20 @@ CREATE TABLE statistics_ip (
     PRIMARY KEY (accessed, sourceidp, service, userid, ip, ipversion)
 );
 
-CREATE INDEX statistics_ip_i1 ON statistics_ip (accessed);
-CREATE INDEX statistics_ip_i2 ON statistics_ip (sourceidp);
-CREATE INDEX statistics_ip_i3 ON statistics_ip (service);
-CREATE INDEX statistics_ip_i4 ON statistics_ip (userid);
-CREATE INDEX statistics_ip_i5 ON statistics_ip (ipversion);
+CREATE INDEX IF NOT EXISTS statistics_ip_i1 ON statistics_ip (accessed);
+CREATE INDEX IF NOT EXISTS statistics_ip_i2 ON statistics_ip (sourceidp);
+CREATE INDEX IF NOT EXISTS statistics_ip_i3 ON statistics_ip (service);
+CREATE INDEX IF NOT EXISTS statistics_ip_i4 ON statistics_ip (userid);
+CREATE INDEX IF NOT EXISTS statistics_ip_i5 ON statistics_ip (ipversion);
 
 --Tables for mapping identifier to name
-CREATE TABLE identityprovidersmap (
+CREATE TABLE IF NOT EXISTS identityprovidersmap (
     entityid character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
     PRIMARY KEY (entityid)
 );
 
-CREATE TABLE serviceprovidersmap (
+CREATE TABLE IF NOT EXISTS serviceprovidersmap (
     identifier character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
     PRIMARY KEY (identifier)
