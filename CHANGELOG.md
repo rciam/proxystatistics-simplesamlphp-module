@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v2.2.2-rciam] - 2021-02-10
+
+### Added
+- Support for excluding specifc user ids from statistics
+
+### Changed
+- Improved postgresql table init script
+
+## [v2.2.1-rciam] - 2020-12-23
+
+### Added
+- Support for storing IP address of authenticating user
+
 ## [v2.2.0-rciam] - 2020-12-23
 
 #### Fixed
