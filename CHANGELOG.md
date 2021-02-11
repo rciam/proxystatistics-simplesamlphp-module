@@ -1,6 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v2.5.1-rciam] - 2021-02-11
+
+### Added
+- Support for IP statistics
+- Support for excluding specific user IDs from statistics
+
+### Changed
+- Improved PostgreSQL init scripts
+
 ## [v2.5.0-rciam] - 2020-06-03
 This version is based on upstream v3.2.1 and is compatible with [SimpleSAMLphp v1.15](https://simplesamlphp.org/docs/1.15/simplesamlphp-changelog)
 
