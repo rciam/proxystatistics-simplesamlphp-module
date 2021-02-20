@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v3.0.2-rciam] - 2021-02-20
+
+#### Fixed
+- Add missing library to statistics class
+
 ## [v3.0.1-rciam] - 2021-02-11
 
 #### Added
