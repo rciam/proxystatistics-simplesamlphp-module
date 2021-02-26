@@ -34,7 +34,7 @@ class Statistics extends ProcessingFilter
             return;
         }
 
-        $dateTime = new DateTime();
+        $dateTime = new DateTime('now', new DateTimeZone( 'UTC' ));
         $dbCmd = new DatabaseCommand();
         $dbCmd->insertLogin($request, $dateTime);
         $spEntityId = $request['SPMetadata']['entityid'];
