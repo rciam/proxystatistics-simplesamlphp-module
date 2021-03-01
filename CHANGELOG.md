@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v2.2.3-rciam] - 2021-03-01
+
+### Changed
+- Record metrics in UTC timezone
+
 ## [v2.2.2-rciam] - 2021-02-10
 
 ### Added
