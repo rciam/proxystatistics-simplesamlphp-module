@@ -3,6 +3,7 @@
 namespace SimpleSAML\Module\proxystatistics\Auth\Process;
 
 use DateTime;
+use DateTimeZone;
 use SimpleSAML\Auth\ProcessingFilter;
 use SimpleSAML\Configuration;
 use SimpleSAML\Error\Exception;
