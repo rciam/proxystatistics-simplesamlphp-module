@@ -1,10 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [v3.0.4-rciam] - 2021-03-04
 
 #### Fixed
 - Add DateTimeZone library
+
 ## [v3.0.3-rciam] - 2021-03-01
 
 #### Changed
