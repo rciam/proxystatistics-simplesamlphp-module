@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v3.0.5-rciam] - 2021-03-08
+
+#### Fixed
+- PostgreSQL syntax error in `addDaysRange()`
+
 ## [v3.0.4-rciam] - 2021-03-04
 
 #### Fixed
