@@ -350,13 +350,18 @@ class DatabaseCommand
             }
             if ($dbDriver == 'pgsql') {
                 $query .= " CAST(CONCAT(year,'-',LPAD(CAST(month AS varchar),2,'0'),'-',LPAD(CAST(day AS varchar),2,'0')) AS date) ";
-                $querySuffix = "> current_date - INTERVAL '1 days' * :days ";
+                $querySuffix = "current_date - INTERVAL '1 days' * :days ";
+                if ($not) {
+                    $query .= "< ";
+                } else {
+                    $query .= "> ";
+                }
             } else {
                 $query .= " CONCAT(year,'-',LPAD(month,2,'00'),'-',LPAD(day,2,'00')) ";
                 $querySuffix = "BETWEEN CURDATE() - INTERVAL :days DAY AND CURDATE() ";
-            }
-            if ($not) {
-                $query .= "NOT ";
+                if ($not) {
+                    $query .= "NOT ";
+                }
             }
             $query .= $querySuffix;
             $params['days'] = $days;
