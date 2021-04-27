@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [v3.0.6-rciam] - 2021-04-27
+
+#### Fixed
+- Statistics class name
+
 ## [v3.0.5-rciam] - 2021-03-08
 
 #### Fixed
